@@ -19,7 +19,10 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_CHECK_FUNCS([memset memcpy strcmp mkdir strdup realpath getxattr dirname basename])
 
-# Check for unportable pthread_setname_np()
+# Check for unportable pthread_setname_np().
 AC_CHECK_LIB(pthread, pthread_setname_np)
+
+# Check if -latomic is needed.
+AC_SEARCH_LIBS(__atomic_load_4, atomic)
 
 AC_OUTPUT(Makefile src/Makefile scripts/Makefile man/Makefile)
