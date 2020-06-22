@@ -76,6 +76,8 @@ pthread_cond_t signal_cond = PTHREAD_COND_INITIALIZER;
 // Time used as "last modified" time
 time_t time_of_mount;
 
+bool removed = false, deleted = false;
+
 static struct btfs_params params;
 
 static bool
@@ -329,6 +331,13 @@ handle_alert(libtorrent::alert *a, Log *log) {
 		handle_torrent_added_alert(
 			(libtorrent::torrent_added_alert *) a, log);
 		break;
+	case libtorrent::torrent_removed_alert::alert_type:
+		removed = true;
+		break;
+	case libtorrent::torrent_deleted_alert::alert_type:
+	case libtorrent::torrent_delete_failed_alert::alert_type:
+		deleted = true;
+		break;
 	case libtorrent::dht_bootstrap_alert::alert_type:
 		*log << a->message() << std::endl;
 		// Force DHT announce because libtorrent won't by itself
@@ -356,25 +365,9 @@ handle_alert(libtorrent::alert *a, Log *log) {
 #endif
 }
 
-
-static void
-alert_queue_loop_destroy(void *data) {
-	Log *log = (Log *) data;
-
-	if (log)
-		delete log;
-}
-
 static void*
 alert_queue_loop(void *data) {
-	int oldstate, oldtype;
-
-	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &oldstate);
-	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, &oldtype);
-
-	pthread_cleanup_push(&alert_queue_loop_destroy, data);
-
-	while (1) {
+	while (!(removed && (params.keep || deleted))) {
 		if (!session->wait_for_alert(libtorrent::seconds(1)))
 			continue;
 
@@ -399,7 +392,7 @@ alert_queue_loop(void *data) {
 #endif
 	}
 
-	pthread_cleanup_pop(1);
+	delete (Log *) data;
 
 	return NULL;
 }
@@ -674,9 +667,6 @@ static void
 btfs_destroy(void *user_data) {
 	pthread_mutex_lock(&lock);
 
-	pthread_cancel(alert_thread);
-	pthread_join(alert_thread, NULL);
-
 #if LIBTORRENT_VERSION_NUM < 10200
 	int flags = 0;
 #else
@@ -688,9 +678,11 @@ btfs_destroy(void *user_data) {
 
 	session->remove_torrent(handle, flags);
 
-	delete session;
-
 	pthread_mutex_unlock(&lock);
+
+	pthread_join(alert_thread, NULL);
+
+	delete session;
 }
 
 static int
