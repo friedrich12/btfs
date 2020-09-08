@@ -1,5 +1,4 @@
-EXTRACXXFLAGS = -std=c++11 \
-                -Wall \
+EXTRACXXFLAGS = -Wall \
                 -Wextra \
                 -Wconversion \
                 -Wsign-compare \
