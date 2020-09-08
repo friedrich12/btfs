@@ -11,10 +11,13 @@ matrix:
       dist: focal
       env: LIBTORRENT_BRANCH=RC_1_1
     - os: osx
+      osx_image: xcode12
       env: LIBTORRENT_BRANCH=RC_2_0
     - os: osx
+      osx_image: xcode12
       env: LIBTORRENT_BRANCH=RC_1_2
     - os: osx
+      osx_image: xcode12
       env: LIBTORRENT_BRANCH=RC_1_1
 env:
   global:
