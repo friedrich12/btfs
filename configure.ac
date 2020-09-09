@@ -25,7 +25,4 @@ AC_CHECK_LIB(pthread, pthread_setname_np)
 # Check if -latomic is needed.
 AC_SEARCH_LIBS(__atomic_load, atomic)
 
-# Compile with -std=c++14
-AX_CXX_COMPILE_STDCXX_14(noext, mandatory)
-
 AC_OUTPUT(Makefile src/Makefile scripts/Makefile man/Makefile)
