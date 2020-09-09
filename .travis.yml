@@ -32,6 +32,7 @@ before_install:
       brew update;
       brew install Caskroom/cask/osxfuse;
       brew install curl;
+      brew install openssl@1.1;
     fi
 install:
   - env $TOOLCHAIN CXXFLAGS="-fpermissive -w" ./scripts/build-libtorrent $LIBTORRENT_BRANCH /tmp
