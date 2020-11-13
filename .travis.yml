@@ -4,6 +4,8 @@ dist: focal
 env:
   global:
     - MAKEFLAGS=-j2
+    - PKG_CONFIG_PATH=/tmp/lib/pkgconfig
+    - LD_LIBRARY_PATH=/tmp/lib
   jobs:
     - LIBTORRENT_BRANCH=RC_1_1
     - LIBTORRENT_BRANCH=RC_1_2
@@ -15,5 +17,5 @@ addons:
       - libfuse-dev
       - libcurl4-openssl-dev
 before_script:
-  - ./scripts/build-libtorrent $LIBTORRENT_BRANCH /usr
+  - ./scripts/build-libtorrent $LIBTORRENT_BRANCH /tmp
   - autoreconf -i
