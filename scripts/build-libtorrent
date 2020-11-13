@@ -21,5 +21,5 @@ cd libtorrent &&
 mkdir build &&
 cd build &&
 cmake -DCMAKE_INSTALL_PREFIX="${2:-/tmp}" -G "Unix Makefiles" .. &&
-make &&
+CXXFLAGS="-fpermissive -w" make &&
 make install
