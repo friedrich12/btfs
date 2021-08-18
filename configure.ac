@@ -4,6 +4,7 @@ AC_CONFIG_SRCDIR([src/btfs.cc])
 
 AM_INIT_AUTOMAKE
 
+
 # Checks for programs.
 AC_PROG_CXX
 
@@ -24,5 +25,9 @@ AC_CHECK_LIB(pthread, pthread_setname_np)
 
 # Check if -latomic is needed.
 AC_SEARCH_LIBS(__atomic_load, atomic)
+
+AC_ENABLE_SHARED
+AC_DISABLE_STATIC
+LT_INIT(libtool)
 
 AC_OUTPUT(Makefile src/Makefile scripts/Makefile man/Makefile)
