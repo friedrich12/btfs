@@ -42,7 +42,7 @@ Use [`brew`](https://brew.sh) to install on macOS.
 ## Building from git on a recent Debian/Ubuntu
 
     $ sudo apt-get install autoconf automake libfuse-dev libtorrent-rasterbar-dev libcurl4-openssl-dev g++
-    $ git clone https://github.com/johang/btfs.git btfs
+    $ git clone https://github.com/friedrich12/btfs.git btfs
     $ cd btfs
     $ autoreconf -i
     $ ./configure
@@ -57,7 +57,7 @@ And optionally, if you want to install it:
 Use [`brew`](https://brew.sh) to get the dependencies.
 
     $ brew install Caskroom/cask/osxfuse libtorrent-rasterbar autoconf automake pkg-config
-    $ git clone https://github.com/johang/btfs.git btfs
+    $ git clone https://github.com/friedrich12/btfs.git btfs
     $ cd btfs
     $ autoreconf -i
     $ ./configure
