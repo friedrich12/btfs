@@ -134,4 +134,6 @@ struct btfs_params {
 
 }
 
+
+void print_help();
 #endif

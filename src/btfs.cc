@@ -954,7 +954,7 @@ btfs_process_arg(void *data, const char *arg, int key,
 	return 1;
 }
 
-static void
+ void
 print_help() {
 	printf("usage: " PACKAGE " [options] metadata mountpoint\n");
 	printf("\n");
@@ -972,7 +972,7 @@ print_help() {
 	printf("    --max-upload-rate=N    max upload rate (in kB/s)\n");
 }
 
-int
+/*int
 main(int argc, char *argv[]) {
 	struct fuse_operations btfs_ops;
 	memset(&btfs_ops, 0, sizeof (btfs_ops));
@@ -1071,4 +1071,4 @@ main(int argc, char *argv[]) {
 	}
 
 	return 0;
-}
+}*/

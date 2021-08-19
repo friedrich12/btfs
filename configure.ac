@@ -7,6 +7,7 @@ AM_INIT_AUTOMAKE
 
 # Checks for programs.
 AC_PROG_CXX
+AC_LANG(C++)
 
 # Checks for libraries.
 PKG_CHECK_MODULES(FUSE, fuse >= 2.8.0)
@@ -26,8 +27,7 @@ AC_CHECK_LIB(pthread, pthread_setname_np)
 # Check if -latomic is needed.
 AC_SEARCH_LIBS(__atomic_load, atomic)
 
-AC_ENABLE_SHARED
-AC_DISABLE_STATIC
-LT_INIT(libtool)
+LT_PREREQ([2.2])
+LT_INIT([dlopen shared])
 
 AC_OUTPUT(Makefile src/Makefile scripts/Makefile man/Makefile)
